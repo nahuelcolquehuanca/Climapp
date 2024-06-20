@@ -40,7 +40,13 @@ class SearchViewModel(val repository: Repository): ViewModel() {
         uiState = SearchState.Loading
         viewModelScope.launch {
             //llamo a funcion para obtener ciudades coincidentes con busqueda
-            val list = repository.searchCity("CABA")
+            try {
+                val cities = repository.searchCity(city)
+                uiState = SearchState.Success(cities)
+            }
+            catch (exception: Exception){
+                uiState = SearchState.Error(exception.message?: "Contacte a Soporte")
+            }
             //SearchState.Success(list)
         }
     }
