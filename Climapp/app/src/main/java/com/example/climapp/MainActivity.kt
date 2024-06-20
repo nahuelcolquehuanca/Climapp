@@ -11,8 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.climapp.MainPage.MainPage
+import com.example.climapp.MainPage
 import com.example.climapp.ui.theme.ClimappTheme
+import com.example.climapp.weather.WeatherPage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ClimappTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainPage(
+                    WeatherPage(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
