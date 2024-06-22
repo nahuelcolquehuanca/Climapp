@@ -56,7 +56,7 @@ fun SearchView(modifier: Modifier, state: SearchState, execute: (SearchIntention
             when(state){
                 is SearchState.Empty-> SearchResultsEmpty()
                 is SearchState.Loading ->SearchResultsLoading()
-                is SearchState.Error ->SearchResultsError()
+                is SearchState.Error ->SearchResultsError(state.error)
                 is SearchState.Success-> SearchResultsSuccess(cities=state.cities, modifier= modifier)
             }
         }
@@ -74,8 +74,8 @@ fun SearchResultsLoading(){
 }
 
 @Composable
-fun SearchResultsError(){
-    Text(text = "Sin resultados")
+fun SearchResultsError(error:String){
+    Text(text = error)
 }
 
 @Composable

@@ -26,7 +26,7 @@ class RepoAPI: Repository {
         }
     }
     override suspend fun searchCity(city: String): List<City> {
-        val response = client.get("http://api.openweathermap.org/geo/1.0/direct"){
+        val response = client.get("https://api.openweathermap.org/geo/1.0/direct"){
             parameter("q", city)
             parameter("limit", 5)
             parameter("appid", apiKey)
