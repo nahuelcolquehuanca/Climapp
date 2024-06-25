@@ -1,7 +1,10 @@
 package com.example.climapp.weather
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -36,16 +39,16 @@ fun WeatherView(modifier: Modifier, state: WeatherState, execute: (WeatherIntent
         }
         TextField(value = lat, onValueChange = {
             lat = it
-        })
+        }, label = { Text(text = "Ingrese Latitud")})
         TextField(value = lon, onValueChange = {
             lon = it
-        })
+        }, label = { Text(text = "Ingrese Longitud")})
         Button(onClick = { execute(WeatherIntention.GetWeather(lat, lon)) }) {
             Text(text = "Obtener Clima")
         }
         Card {
             when(state){
-                is WeatherState.Success -> WeatherViewSuccess(state)
+                is WeatherState.Success -> WeatherViewSuccess(state, modifier = modifier)
                 is WeatherState.Loading -> WeatherViewLoading()
                 is WeatherState.Error -> WeatherViewError(state)
                 WeatherState.Blank -> WeatherViewBlank()
@@ -55,11 +58,33 @@ fun WeatherView(modifier: Modifier, state: WeatherState, execute: (WeatherIntent
 }
 
 @Composable
-fun WeatherViewSuccess(state: WeatherState.Success){
-    Text(text = "Temperatura: ${state.temperature}")
-    Text(text = "Sensacion termica: ${state.st}")
-    Text(text = "Ciudad: "+state.city)
-    Text(text = "Estado: "+state.state)
+fun WeatherViewSuccess(state: WeatherState.Success, modifier: Modifier){
+    val sdf = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    var count: Int = 3
+
+    Column {
+        Text(text = "Temperatura: ${state.temperature}")
+        Text(text = "Sensacion termica: ${state.st}")
+        Text(text = "Ciudad: "+state.city)
+        Text(text = "Estado: "+state.state)
+        Spacer(modifier = modifier)
+        Text(text = "Pronostico: ")
+        Card {
+            LazyColumn(modifier = modifier) {
+                items(items = state.forecast){
+                    count++
+                    val date = java.util.Date(it.dt *1000)
+                    sdf.format(date)
+                    Card {
+                        Text(text = "$date")
+                        Text(text = "Temperatura Max: "+"${it.main.temp_max}")
+                        Text(text = "Temperatura Min: "+"${it.main.temp_min}")
+                    }
+
+                }
+            }
+        }
+    }
 
 }
 

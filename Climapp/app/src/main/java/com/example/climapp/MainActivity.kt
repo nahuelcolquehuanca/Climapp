@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ClimappTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SearchPage(
+                    WeatherPage(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

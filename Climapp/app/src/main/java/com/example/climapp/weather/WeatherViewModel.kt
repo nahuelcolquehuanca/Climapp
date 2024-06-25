@@ -49,11 +49,13 @@ class WeatherViewModel(val repository: Repository): ViewModel() {
         viewModelScope.launch {
             try {
                 val result = repository.getWeather(lat = lat, lon = lon)
+                val forecast = repository.getForectast(lat = lat, lon = lon)
                 uiState = WeatherState.Success(
                     temperature = result.main.temp.toInt(),
                     city = result.name,
                     st = result.main.feels_like.toInt(),
-                    state = result.weather.first().description
+                    state = result.weather.first().description,
+                    forecast = forecast
                 )
             }catch (exception:Exception){
                 uiState = WeatherState.Error(exception.message?:"Contacte a Soporte")

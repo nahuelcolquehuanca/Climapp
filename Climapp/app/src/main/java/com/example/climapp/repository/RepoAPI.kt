@@ -1,7 +1,13 @@
 package com.example.climapp.repository
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 import com.example.climapp.repository.models.City
+import com.example.climapp.repository.models.Forecast
+import com.example.climapp.repository.models.ListForecast
 import com.example.climapp.repository.models.Weather
+import com.google.android.gms.location.LocationRequest
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -56,7 +62,22 @@ class RepoAPI: Repository {
 
     }
 
-    override suspend fun getForectast(city: City): List<Weather> {
-        TODO("Not yet implemented")
+    override suspend fun getForectast(lat: String, lon: String): List<ListForecast> {
+        val response = client.get("https://api.openweathermap.org/data/2.5/forecast"){
+            parameter("lat", lat)
+            parameter("lon", lon)
+            parameter("units", units)
+            parameter("appid", apiKey)
+        }
+        if(response.status == HttpStatusCode.OK){
+            val forecast = response.body<Forecast>()
+            return forecast.list
+        }
+        else{
+            throw Exception()
+        }
     }
+
+
+
 }
