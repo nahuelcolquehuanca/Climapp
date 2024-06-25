@@ -1,21 +1,15 @@
 package com.example.climapp.repository
 
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
 import com.example.climapp.repository.models.City
 import com.example.climapp.repository.models.Forecast
 import com.example.climapp.repository.models.ListForecast
 import com.example.climapp.repository.models.Weather
-import com.google.android.gms.location.LocationRequest
-
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.parametersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -77,6 +71,10 @@ class RepoAPI: Repository {
             throw Exception()
         }
     }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
